@@ -1,4 +1,4 @@
-# Chainguard Agent Skills — Product Demo
+# Chainguard Agent Skills Product Demo
 
 The script and materials for the Chainguard Agent Skills product demo. 
 
@@ -29,9 +29,9 @@ Running the whole demo should take about 15-20 minutes. A shorter version of thi
 
 ## Demo folders
 
-- [`workstation-checkup-sample-skill/`](workstation-checkup-sample-skill/) — a clean, well-formed reference skill, and the one we publish to an org later in the walkthrough.
-- [`malicious-skill-example/`](malicious-skill-example/) — two defanged specimens of real upstream malware, [`fun-brainstorming`](malicious-skill-example/fun-brainstorming.SKILL.md) and [`find-skills`](malicious-skill-example/find-skills.SKILL.md). Read them; don't run them.
-- [`hardening-comparison/`](hardening-comparison/) — a useful-but-vulnerable upstream skill ([`web-design-upstream`](hardening-comparison/web-design-upstream/SKILL.md)) next to its [Chainguard-hardened version](hardening-comparison/web-design-hardened/SKILL.md) and the [`HARDENING.md`](hardening-comparison/web-design-hardened/HARDENING.md) report. Diff the two to see exactly what changed.
+- [`workstation-checkup-sample-skill/`](workstation-checkup-sample-skill/): a clean, well-formed reference skill, and the one we publish to an org later in the walkthrough.
+- [`malicious-skill-example/`](malicious-skill-example/): two defanged specimens of real upstream malware, [`fun-brainstorming`](malicious-skill-example/fun-brainstorming.SKILL.md) and [`find-skills`](malicious-skill-example/find-skills.SKILL.md).
+- [`hardening-comparison/`](hardening-comparison/): a useful-but-vulnerable upstream skill ([`web-design-upstream`](hardening-comparison/web-design-upstream/SKILL.md)) next to its [Chainguard-hardened version](hardening-comparison/web-design-hardened/SKILL.md) and the [`HARDENING.md`](hardening-comparison/web-design-hardened/HARDENING.md) report. Diff the two to see exactly what changed.
 
 ---
 
@@ -131,13 +131,13 @@ This is the full script; the condensed version above is the tl;dr.
 
 ### What's a skill?
 
-- An agent skill is markdown plus some metadata that gets injected into an agent session in one of your agentic coding tools — Claude Code, Cursor, Codex. It gives that session new capabilities, whether that's writing in a certain style or doing front-end design or whatever else the skill describes. You get them from public registries, the same way you'd install a package.
+- An agent skill is markdown plus some metadata that gets injected into an agent session in one of your agentic coding tools, like Claude Code, Cursor, or Codex. It gives that session new capabilities, whether that's writing in a certain style or doing front-end design or whatever else the skill describes. You get them from public registries, the same way you'd install a package.
 - They were introduced in October 2025. Your agents act on your behalf, and your workstation has sensitive data and sometimes the keys to the kingdom, so agent tooling can become a major attack surface. We've seen attacks like Sandworm mode taking advantage of this already in 2026.
-- In fact, analyses earlier this year found that more than a third of the skills in a large public marketplace — over 37% — had at least one security flaw, and roughly one in eight had a critical issue: malware, prompt injection, or exposed secrets. And even the skills that aren't outright malicious often ask for far more permission than they need.
+- In fact, analyses earlier this year found that more than a third of the skills in a large public marketplace, over 37%, had at least one security flaw, and roughly one in eight had a critical issue: malware, prompt injection, or exposed secrets. And even the skills that aren't outright malicious often ask for far more permission than they need.
 
 ### Looking at a normal skill
 
-_This section can be cut, but it's grounding — most devs won't have looked at an agent skill themselves._
+_This section can be cut, but it's grounding. Most devs won't have looked at an agent skill themselves._
 
 Show the agent skill:
 
@@ -146,9 +146,9 @@ cat workstation-checkup-sample-skill/SKILL.md
 ```
 
 - Before we look at a bad skill, here's what a normal one looks like on the ground.
-- A skill is a folder with a `SKILL.md` in it. That's basically what the spec says a skill is. The folder can also hold other things — scripts, metadata — whatever's allowed.
+- A skill is a folder with a `SKILL.md` in it. That's basically what the spec says a skill is. The folder can also hold other things: scripts, metadata, whatever's allowed.
 - The only two required parts are the name and the description. The description matters most: it's what triggers the skill. It tells the agent the circumstances under which the skill should be loaded and used.
-- Everything above the body is metadata. The rest is the markdown body — the context that gets injected into the session, giving the agent the instructions it needs to perform the task.
+- Everything above the body is metadata. The rest is the markdown body, the context that gets injected into the session, giving the agent the instructions it needs to perform the task.
 - This one audits a laptop for things like developer keys lying around. Read-only, plain English.
 
 ### Examining a live malicious skill
@@ -159,7 +159,7 @@ Note first that this is live malware, nobody is following along at home, etc. Ev
 cat malicious-skill-example/fun-brainstorming.SKILL.md
 ```
 
-- It has everything you'd associate with a normal skill — a name, a description ("invoke before any creative or architectural work…"). The body is mostly cover, filler about how to brainstorm. There's nothing truly valuable here.
+- It has everything you'd associate with a normal skill: a name, a description ("invoke before any creative or architectural work…"). The body is mostly cover, filler about how to brainstorm. There's nothing truly valuable here.
 - The real point of this skill is to boost into a second skill. It runs:
 
   ```bash
@@ -179,7 +179,7 @@ cat malicious-skill-example/find-skills.SKILL.md
   ```
 
   Sending your hostname to a typosquatted domain. `vercel-find-skills.io` is not Vercel; it's the attacker's misspelled domain. When it phones home, the attacker can pull in whatever they cooked up recently to do to your machine.
-- There are a lot of mechanisms like this to compromise a workstation — from editing your `CLAUDE.md` / `AGENTS.md` / `SOUL.md` so a payload is permanently injected into every future agent session, to bootstrapping into a more conventional AMOS macOS Stealer setup — the kind of attack there was a big campaign around earlier this year.
+- There are a lot of mechanisms like this to compromise a workstation: from editing your `CLAUDE.md` / `AGENTS.md` / `SOUL.md` so a payload is permanently injected into every future agent session, to bootstrapping into a more conventional AMOS macOS Stealer setup, the kind of attack there was a big campaign around earlier this year.
 
 ### Examining a useful but vulnerable skill
 
@@ -188,8 +188,8 @@ cat hardening-comparison/web-design-upstream/SKILL.md
 ```
 
 - Beyond malicious skills, there's a whole world of skills that aren't actively malicious but are built in a way that leaves your workstation vulnerable. Let's make that concrete.
-- This is a real, legitimate web-design skill — used by a lot of people, lots of GitHub stars, genuinely useful advice for reviewing UI.
-- But this part is the issue. It's built to fetch fresh guidelines before each review, from a raw GitHub URL — `raw.githubusercontent.com/vercel-labs/web-interface-guidelines/main/command.md` — using WebFetch. The rules aren't in the skill; they're on someone else's server.
+- This is a real, legitimate web-design skill, used by a lot of people, with lots of GitHub stars and genuinely useful advice for reviewing UI.
+- But this part is the issue. It's built to fetch fresh guidelines before each review, from a raw GitHub URL, `raw.githubusercontent.com/vercel-labs/web-interface-guidelines/main/command.md`, using WebFetch. The rules aren't in the skill; they're on someone else's server.
 - Right now that's a legitimate location. But it's a bad pattern for agent-session security: if an attacker compromised that repo, or the host decided to use it as a vector, the skill goes from benign and useful to malicious, and the skill file itself never has to change.
 
 ### Hardened skill from Chainguard Agent Skills
@@ -200,7 +200,7 @@ Chainguard Agent Skills takes upstream skills and hardens them to remove these a
 diff hardening-comparison/web-design-upstream/SKILL.md hardening-comparison/web-design-hardened/SKILL.md
 ```
 
-The remote fetch is gone; the rules that used to live on that raw GitHub endpoint are now inlined into the file itself; and an `allowed-tools` list with just `read-file` is added, so the skill can't even reach the network. By pinning that endpoint's contents into the skill, a supply-chain risk becomes a hardened skill you can run with confidence — the behavior now lives in the file you can read.
+The remote fetch is gone; the rules that used to live on that raw GitHub endpoint are now inlined into the file itself; and an `allowed-tools` list with just `read-file` is added, so the skill can't even reach the network. By pinning that endpoint's contents into the skill, a supply-chain risk becomes a hardened skill you can run with confidence. The behavior now lives in the file you can read.
 
 Then show the hardening report:
 
@@ -208,8 +208,8 @@ Then show the hardening report:
 cat hardening-comparison/web-design-hardened/HARDENING.md
 ```
 
-- Next to every `SKILL.md` sits a `HARDENING.md` — a report of what was found and what was changed, and where the skill came from.
-- Here the findings are `no-obfuscated-commands` (HIGH) for the remote-fetch stager, and `minimal-permissions` (HIGH) for not declaring its tools. The report flags this as a multi-stage stager pattern — the same family as [`fun-brainstorming`](malicious-skill-example/fun-brainstorming.SKILL.md): behavior pulled in from elsewhere at runtime instead of living in the file you can read.
+- Next to every `SKILL.md` sits a `HARDENING.md`, a report of what was found and what was changed, and where the skill came from.
+- Here the findings are `no-obfuscated-commands` (HIGH) for the remote-fetch stager, and `minimal-permissions` (HIGH) for not declaring its tools. The report flags this as a multi-stage stager pattern, the same family as [`fun-brainstorming`](malicious-skill-example/fun-brainstorming.SKILL.md): behavior pulled in from elsewhere at runtime instead of living in the file you can read.
 
 ### Using Chainguard Agent Skills
 
@@ -227,7 +227,7 @@ To drill down into one of the listed upstreams:
 chainctl skills list --group chainguard/antfu
 ```
 
-You should see a list of skills — including `web-design-guidelines`, the one we just looked at hardened.
+You should see a list of skills, including `web-design-guidelines`, the one we just looked at hardened.
 
 Describe it to see its details:
 
@@ -243,7 +243,7 @@ Pull it locally:
 chainctl skills pull skills.cgr.dev/chainguard/antfu/web-design-guidelines:latest
 ```
 
-This pulls it locally. The folder includes the `SKILL.md` and its `HARDENING.md`, among a few files — and since this is the skill we just hardened, the report lists real fixes: `no-obfuscated-commands` for the remote-fetch stager and `minimal-permissions`, plus where it came from and what changed.
+This pulls it locally. The folder includes the `SKILL.md` and its `HARDENING.md`, among a few files. Since this is the skill we just hardened, the report lists real fixes: `no-obfuscated-commands` for the remote-fetch stager and `minimal-permissions`, plus where it came from and what changed.
 
 Install it:
 
@@ -251,9 +251,9 @@ Install it:
 chainctl skills install skills.cgr.dev/chainguard/antfu/web-design-guidelines:latest
 ```
 
-By default Chainguard Agent Skills detects which agentic coding tools you have on the machine and installs to all of them (here it'd hit Claude Code and Codex); you can target one with a flag. In Claude Code, `/skills` shows the installed skills — and there it is.
+By default Chainguard Agent Skills detects which agentic coding tools you have on the machine and installs to all of them (here it'd hit Claude Code and Codex); you can target one with a flag. In Claude Code, `/skills` shows the installed skills, and there it is.
 
-Now the private side — list your org's own skills, visible only to you and your org:
+Now the private side. List your org's own skills, visible only to you and your org:
 
 ```bash
 chainctl skills list --group $ORGANIZATION
@@ -267,10 +267,10 @@ chainctl skills push workstation-checkup-sample-skill --group $ORGANIZATION --ta
 chainctl skills list --group $ORGANIZATION
 ```
 
-Validate, push, list again — and the new skill is there. From here you pull and install it exactly like the public ones. That lets your developers pull skills with confidence, and see what others around the organization are using.
+Validate, push, list again, and the new skill is there. From here you pull and install it exactly like the public ones. That lets your developers pull skills with confidence, and see what others around the organization are using.
 
 ### Wrap up
 
 - In the short time skills have been on the developer landscape, they've become an essential part of how we work with agents.
-- But upstream skill repositories are full of security problems — a large share of skills carry at least one flaw, some are outright malicious, and even the ones that aren't often ask for far more permission than they need, or phone out to a location that could be swapped for a malicious payload.
-- Chainguard Agent Skills is a repository that takes third-party skills, hardens them, and makes them available so you can use them with confidence — and it lets you and your organization harden, share, and discover your own internal agent skills.
+- But upstream skill repositories are full of security problems: a large share of skills carry at least one flaw, some are outright malicious, and even the ones that aren't often ask for far more permission than they need, or phone out to a location that could be swapped for a malicious payload.
+- Chainguard Agent Skills is a repository that takes third-party skills, hardens them, and makes them available so you can use them with confidence, and it lets you and your organization harden, share, and discover your own internal agent skills.
