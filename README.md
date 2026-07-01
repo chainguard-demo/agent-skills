@@ -14,7 +14,7 @@ Run the commands in this demo from the root of the cloned repository
 
 ## Overview
 
-An agent skill is a folder containing a `SKILL.md` markdown file. The file contains, at minimum a name, a description that serves as a trigger ("when analyzing a CVE"), and a skill body. When the skill is triggered, the body gets injected into an agent session as context. Skills are designed to give new capabilities to agentic environments such as Claude Code, Cursor, or Codex, such as code review or writing a blog.
+An agent skill is a folder containing a `SKILL.md` markdown file. The file contains, at minimum, a name, a description that serves as a trigger ("when analyzing a CVE"), and a skill body. When the skill is triggered, the body gets injected into an agent session as context. Skills are designed to give new capabilities to agentic environments (Claude Code, Cursor, Codex) such as code review or writing a blog.
 
 Skills are popular and widely used, and run in environments (such as dev workstations) that are privileged. That makes them an excellent vector for attack. Chainguard Agent Skills tackles this problem by providing a repository of hardened agent skills. These skills have gone through a pipeline to remove bad patterns and to block malware.
 
