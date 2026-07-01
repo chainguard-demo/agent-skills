@@ -6,22 +6,23 @@ The script and materials for the Chainguard Agent Skills product demo.
 Clone the repository:
 
 ```bash
-XXX
+git clone https://github.com/chainguard-demo/agent-skills.git
+cd agent-skills
 ```
 
 Run the commands in this demo from the root of the cloned repository
 
 ## Overview
 
-An agent skill is a folder containing a `SKILL.md` markdown file. The file contains, at minimumm a name, a description that serves as a trigger ("when analyzing a CVE"), and a skill body. When the skill is triggered, the body gets injected into an agent session as context. Skills are designed to give new capabilities to agentic environments such as Claude Code, Cursor, or Codex, such as code review or writing a blog.
+An agent skill is a folder containing a `SKILL.md` markdown file. The file contains, at minimum a name, a description that serves as a trigger ("when analyzing a CVE"), and a skill body. When the skill is triggered, the body gets injected into an agent session as context. Skills are designed to give new capabilities to agentic environments such as Claude Code, Cursor, or Codex, such as code review or writing a blog.
 
-Skills are popular and widely used, and run in environments (such as dev workstations) that are privileged. That makes them an excellent vector for attack. Chainguard Agent Skills tackles this problem by providing a repository of hardened agents skills. These skill have gone through a pipelie to remove bad pattern and to block malware.
+Skills are popular and widely used, and run in environments (such as dev workstations) that are privileged. That makes them an excellent vector for attack. Chainguard Agent Skills tackles this problem by providing a repository of hardened agent skills. These skills have gone through a pipeline to remove bad patterns and to block malware.
 
 This demo provides a full end-to-end walkthrough that should serve both mystified prospects and more technical personas. 
 
 - First, we show an example of a skill to get a feel for the format and to point out the highlights (name, description, body).
 - We then take a look at a live (as of July 1st, 2026) malicious skill taken from an upstream skills repository. (Note that while the skill is stamped malicious, be cautious with live malware.) 
-- We then do a before and after with a useful bt insecure skill taken from an upstream repository. First, we show the flaw in the upstream skill, then we show the hardened Chainguard Agent Skill and the attached hardening report.
+- We then do a before and after with a useful but insecure skill taken from an upstream repository. First, we show the flaw in the upstream skill, then we show the hardened Chainguard Agent Skill and the attached hardening report.
 - We step through the current product surface for Chainguard Agent Skills, including pushing your own skill.
 
 Running the whole demo should take about 15-20 minutes. A shorter version of this demo might combine showing the malicious skill or the hardening before / after and the current product surface.
@@ -36,7 +37,7 @@ Running the whole demo should take about 15-20 minutes. A shorter version of thi
 
 ## Setup
 
-Make sure you have `chainctl` [installed](XXX) and authenticated.
+Make sure you have `chainctl` [installed](https://edu.chainguard.dev/chainguard/chainctl-usage/how-to-install-chainctl/) and authenticated.
 
 Check that you have access to the Skills entitlement:
 
