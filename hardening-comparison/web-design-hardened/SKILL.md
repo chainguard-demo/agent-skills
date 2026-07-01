@@ -8,6 +8,7 @@ metadata:
 allowed-tools:
   - read-file
 ---
+
 # Web Interface Guidelines
 
 Review files for compliance with Web Interface Guidelines.
