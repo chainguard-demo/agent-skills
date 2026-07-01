@@ -1,20 +1,42 @@
 # Chainguard Agent Skills — Product Demo
 
-The script and materials for the Chainguard Agent Skills product demo. Run the commands from this folder.
+The script and materials for the Chainguard Agent Skills product demo. 
 
-Agent skills are markdown-plus-metadata packages that plug into agentic coding tools like Claude Code, Cursor, and Codex, giving a session new capabilities, and you install them from public registries like any other package. Because a skill's instructions run with your agent's access to your machine and your keys, a malicious or sloppy skill is a real attack surface — one that's already being exploited in the wild. This demo walks that threat with real examples — a live malware specimen and a useful-but-vulnerable skill — then shows how Chainguard Agent Skills hardens a skill and how you pull, install, and publish skills with `chainctl`.
 
-## What's in here
+Clone the repository:
+
+```bash
+XXX
+```
+
+Run the commands in this demo from the root of the cloned repository
+
+## Overview
+
+An agent skill is a folder containing a `SKILL.md` markdown file. The file contains, at minimumm a name, a description that serves as a trigger ("when analyzing a CVE"), and a skill body. When the skill is triggered, the body gets injected into an agent session as context. Skills are designed to give new capabilities to agentic environments such as Claude Code, Cursor, or Codex, such as code review or writing a blog.
+
+Skills are popular and widely used, and run in environments (such as dev workstations) that are privileged. That makes them an excellent vector for attack. Chainguard Agent Skills tackles this problem by providing a repository of hardened agents skills. These skill have gone through a pipelie to remove bad pattern and to block malware.
+
+This demo provides a full end-to-end walkthrough that should serve both mystified prospects and more technical personas. 
+
+- First, we show an example of a skill to get a feel for the format and to point out the highlights (name, description, body).
+- We then take a look at a live (as of July 1st, 2026) malicious skill taken from an upstream skills repository. (Note that while the skill is stamped malicious, be cautious with live malware.) 
+- We then do a before and after with a useful bt insecure skill taken from an upstream repository. First, we show the flaw in the upstream skill, then we show the hardened Chainguard Agent Skill and the attached hardening report.
+- We step through the current product surface for Chainguard Agent Skills, including pushing your own skill.
+
+Running the whole demo should take about 15-20 minutes. A shorter version of this demo might combine showing the malicious skill or the hardening before / after and the current product surface.
+
+## Demo folders
 
 - [`workstation-checkup-sample-skill/`](workstation-checkup-sample-skill/) — a clean, well-formed reference skill, and the one we publish to an org later in the walkthrough.
-- [`malicious-skill-example/`](malicious-skill-example/) — two **defanged** specimens of real upstream malware, [`fun-brainstorming`](malicious-skill-example/fun-brainstorming.SKILL.md) and [`find-skills`](malicious-skill-example/find-skills.SKILL.md). Read them; don't run them.
+- [`malicious-skill-example/`](malicious-skill-example/) — two defanged specimens of real upstream malware, [`fun-brainstorming`](malicious-skill-example/fun-brainstorming.SKILL.md) and [`find-skills`](malicious-skill-example/find-skills.SKILL.md). Read them; don't run them.
 - [`hardening-comparison/`](hardening-comparison/) — a useful-but-vulnerable upstream skill ([`web-design-upstream`](hardening-comparison/web-design-upstream/SKILL.md)) next to its [Chainguard-hardened version](hardening-comparison/web-design-hardened/SKILL.md) and the [`HARDENING.md`](hardening-comparison/web-design-hardened/HARDENING.md) report. Diff the two to see exactly what changed.
 
 ---
 
 ## Setup
 
-Make sure you have `chainctl` installed and authenticated.
+Make sure you have `chainctl` [installed](XXX) and authenticated.
 
 Check that you have access to the Skills entitlement:
 
